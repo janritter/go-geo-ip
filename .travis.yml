@@ -4,4 +4,4 @@ go:
  - tip
 
 script:
- - go test ./geoip
+ - go test ./geoip -v
