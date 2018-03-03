@@ -22,7 +22,15 @@ type IpGeoInfo struct {
 }
 
 func ForIp(ip string) IpGeoInfo {
-	url := "https://freegeoip.net/json/"+ip
+	return makeApiCall(ip)
+}
+
+func ForDomain(domain string) IpGeoInfo {
+	return makeApiCall(domain)
+}
+
+func makeApiCall(data string) IpGeoInfo {
+	url := "https://freegeoip.net/json/"+data
 
 	httpClient := http.Client{}
 
