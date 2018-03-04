@@ -1,3 +1,5 @@
+// Package geoip provides a wrapper for the freegeoip.net api, which returns geo information for
+// a given IP address or domain.
 package geoip
 
 import (
@@ -21,10 +23,15 @@ type IpGeoInfo struct {
 	MetroCode   int     `json:"metro_code"`
 }
 
+// ForIp takes a IP address as string and fetches the geo information for it.
+// It returns a IpGeoInfo struct with the result information.
 func ForIp(ip string) IpGeoInfo {
 	return makeApiCall(ip)
 }
 
+// ForDomain takes a domain as string and fetches the geo information for it.
+// The Domain gets first resolved to the corresponding IP.
+// It returns a IpGeoInfo struct with the result information.
 func ForDomain(domain string) IpGeoInfo {
 	return makeApiCall(domain)
 }
