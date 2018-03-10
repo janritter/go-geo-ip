@@ -9,7 +9,7 @@ import (
 	"encoding/json"
 )
 
-// This struct is filled with the information of the response json, received for the specified IP
+// IPGeoInfo contains the information of the response json, received for the specified IP
 // Not all values have to be set in the response struct
 type IPGeoInfo struct {
 	IP          string  `json:"ip"`
