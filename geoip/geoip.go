@@ -9,7 +9,9 @@ import (
 	"encoding/json"
 )
 
-type IpGeoInfo struct {
+// This struct is filled with the information of the response json, received for the specified IP
+// Not all values have to be set in the response struct
+type IPGeoInfo struct {
 	IP          string  `json:"ip"`
 	CountryCode string  `json:"country_code"`
 	CountryName string  `json:"country_name"`
@@ -23,20 +25,20 @@ type IpGeoInfo struct {
 	MetroCode   int     `json:"metro_code"`
 }
 
-// ForIp takes a IP address as string and fetches the geo information for it.
-// It returns a IpGeoInfo struct with the result information.
-func ForIp(ip string) IpGeoInfo {
-	return makeApiCall(ip)
+// ForIP takes a IP address as string and fetches the geo information for it.
+// It returns a IPGeoInfo struct with the result information.
+func ForIP(ip string) IPGeoInfo {
+	return makeAPICall(ip)
 }
 
 // ForDomain takes a domain as string and fetches the geo information for it.
 // The Domain gets first resolved to the corresponding IP.
-// It returns a IpGeoInfo struct with the result information.
-func ForDomain(domain string) IpGeoInfo {
-	return makeApiCall(domain)
+// It returns a IPGeoInfo struct with the result information.
+func ForDomain(domain string) IPGeoInfo {
+	return makeAPICall(domain)
 }
 
-func makeApiCall(data string) IpGeoInfo {
+func makeAPICall(data string) IPGeoInfo {
 	url := "https://freegeoip.net/json/"+data
 
 	httpClient := http.Client{}
@@ -56,7 +58,7 @@ func makeApiCall(data string) IpGeoInfo {
 		log.Fatal(readErr)
 	}
 
-	geoInfo := IpGeoInfo{}
+	geoInfo := IPGeoInfo{}
 	jsonErr := json.Unmarshal(body, &geoInfo)
 	if jsonErr != nil {
 		log.Fatal(jsonErr)
