@@ -18,6 +18,14 @@ func TestForIP(t *testing.T) {
 	}
 }
 
+func TestForIPInvalid(t *testing.T){
+	_, err := ForIP("8.8.8")
+
+	if err == nil {
+		t.Error("Expected error to contain an error description, got ", err)
+	}
+}
+
 func TestForDomain(t *testing.T) {
 	geoInfo, err := ForDomain("google.com")
 
