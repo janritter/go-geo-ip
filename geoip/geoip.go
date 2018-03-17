@@ -4,9 +4,9 @@ package geoip
 
 import (
 	"net/http"
-	"log"
 	"io/ioutil"
 	"encoding/json"
+	"errors"
 )
 
 // IPGeoInfo contains the information of the response json, received for the specified IP
@@ -27,42 +27,47 @@ type IPGeoInfo struct {
 
 // ForIP takes a IP address as string and fetches the geo information for it.
 // It returns a IPGeoInfo struct with the result information.
-func ForIP(ip string) IPGeoInfo {
+func ForIP(ip string) (IPGeoInfo, error) {
 	return makeAPICall(ip)
 }
 
 // ForDomain takes a domain as string and fetches the geo information for it.
 // The Domain gets first resolved to the corresponding IP.
 // It returns a IPGeoInfo struct with the result information.
-func ForDomain(domain string) IPGeoInfo {
+func ForDomain(domain string) (IPGeoInfo, error) {
 	return makeAPICall(domain)
 }
 
-func makeAPICall(data string) IPGeoInfo {
+func makeAPICall(data string) (IPGeoInfo, error)  {
 	url := "https://freegeoip.net/json/"+data
 
 	httpClient := http.Client{}
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
-		log.Fatal(err)
+		return IPGeoInfo{}, err
 	}
 
-	res, getErr := httpClient.Do(req)
-	if getErr != nil {
-		log.Fatal(getErr)
+	res, err := httpClient.Do(req)
+	if err != nil {
+		return IPGeoInfo{}, err
 	}
 
-	body, readErr := ioutil.ReadAll(res.Body)
-	if readErr != nil {
-		log.Fatal(readErr)
+	//Check StatusCode
+	if res.StatusCode != 200 {
+		return IPGeoInfo{}, errors.New("invalid response code, was not 200 OK")
+	}
+
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return IPGeoInfo{}, err
 	}
 
 	geoInfo := IPGeoInfo{}
-	jsonErr := json.Unmarshal(body, &geoInfo)
-	if jsonErr != nil {
-		log.Fatal(jsonErr)
+	JsonErr := json.Unmarshal(body, &geoInfo)
+	if JsonErr != nil {
+		return IPGeoInfo{}, JsonErr
 	}
 
-	return geoInfo
+	return geoInfo, nil
 }
