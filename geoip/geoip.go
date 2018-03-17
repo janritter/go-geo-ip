@@ -26,14 +26,14 @@ type IPGeoInfo struct {
 }
 
 // ForIP takes a IP address as string and fetches the geo information for it.
-// It returns a IPGeoInfo struct with the result information.
+// It returns a IPGeoInfo struct with the result information or an error.
 func ForIP(ip string) (IPGeoInfo, error) {
 	return makeAPICall(ip)
 }
 
 // ForDomain takes a domain as string and fetches the geo information for it.
 // The Domain gets first resolved to the corresponding IP.
-// It returns a IPGeoInfo struct with the result information.
+// It returns a IPGeoInfo struct with the result information or an error.
 func ForDomain(domain string) (IPGeoInfo, error) {
 	return makeAPICall(domain)
 }
