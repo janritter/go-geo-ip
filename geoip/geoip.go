@@ -3,10 +3,10 @@
 package geoip
 
 import (
-	"net/http"
-	"io/ioutil"
 	"encoding/json"
 	"errors"
+	"io/ioutil"
+	"net/http"
 )
 
 // IPGeoInfo contains the information of the response json, received for the specified IP
@@ -38,8 +38,8 @@ func ForDomain(domain string) (IPGeoInfo, error) {
 	return makeAPICall(domain)
 }
 
-func makeAPICall(data string) (IPGeoInfo, error)  {
-	url := "https://freegeoip.net/json/"+data
+func makeAPICall(data string) (IPGeoInfo, error) {
+	url := "https://freegeoip.app/json/" + data
 
 	httpClient := http.Client{}
 

@@ -4,7 +4,7 @@
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fjanritter%2Fgo-geo-ip.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fjanritter%2Fgo-geo-ip?ref=badge_shield)
 # GeoIP Go Package
 
-Wrapper package for the freegeoip.net api written in Go
+Wrapper package for the freegeoip.app api written in Go
 
 ## How to use
 Via 'go get'
